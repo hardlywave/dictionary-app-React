@@ -5,50 +5,44 @@ import { Route, useParams, Routes } from "react-router-dom";
 import Header from "./Header";
 import Definition from "./Definition";
 import ErrorPage from "./ErrorPage";
-
-const NewComponent = ({ word, meanings, setMeanings }) => {
+//
+const NewComponent = ({ word, meanings, setMeanings, setLoading }) => {
   let { word: url_word } = useParams();
-
-  const dictionaryApi = async () => {
-    try {
-      const data = await axios.get(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${word || url_word}`
-      );
-      console.log(data);
-      setMeanings(data.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
-    dictionaryApi();
+    setLoading(true);
+    axios
+      .get(
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${word || url_word}`
+      )
+      .then(({ data }) => {
+        console.log(data);
+        setLoading(false);
+        setMeanings(data);
+      })
+      .catch(() => {
+        return setLoading(false)((window.location.href = "/error"));
+      });
   }, [url_word]);
   return <Definition word={word || url_word} meanings={meanings} />;
 };
-
+//
 function App() {
   const [word, setWord] = useState("");
   const [meanings, setMeanings] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   return (
     <div className="dict">
       <div className="dict__sidebar">
-        <Header setWord={setWord}></Header>
+        <Header
+          loading={loading}
+          setLoading={setLoading}
+          setWord={setWord}
+        ></Header>
       </div>
       <section className="dict__definition">
         <Routes>
-          <Route
-            exact
-            path={`/search/:word`}
-            element={
-              <NewComponent
-                meanings={meanings}
-                word={word}
-                setMeanings={setMeanings}
-              />
-            }
-          />
+          <Route path="*" element={<ErrorPage />} />
           <Route
             exact
             path={`/`}
@@ -58,7 +52,18 @@ function App() {
               </h4>
             }
           />
-          <Route exact path={`/search`} element={<ErrorPage />} />
+          <Route
+            exact
+            path={`/search/:word`}
+            element={
+              <NewComponent
+                meanings={meanings}
+                word={word}
+                setMeanings={setMeanings}
+                setLoading={setLoading}
+              />
+            }
+          />
         </Routes>
       </section>
     </div>
@@ -66,3 +71,22 @@ function App() {
 }
 
 export default App;
+
+//   const dictionaryApi = async () => {
+//     try {
+//       const data = await axios.get(
+//         `https://api.dictionaryapi.dev/api/v2/entries/en/${word || url_word}`
+//       );
+//       console.log(data);
+//       setMeanings(data.data);
+//     } catch (error) {
+//       console.log(error);
+//       return (Window.location.href = "/error");
+//     }
+//   };
+
+//   useEffect(() => {
+//     dictionaryApi();
+//   }, [url_word]);
+//   return <Definition word={word || url_word} meanings={meanings} />;
+// };
