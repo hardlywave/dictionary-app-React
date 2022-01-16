@@ -1,4 +1,5 @@
 import React from "react";
+//
 import "./Definition.scss";
 
 const Definition = ({ word, meanings }) => {
@@ -23,38 +24,31 @@ const Definition = ({ word, meanings }) => {
           </audio>
         </div>
       )}
-
-      {word === "" ? (
-        <span className="definition__title">
-          Start by typing a word in Search
-        </span>
-      ) : (
-        meanings.map((mean) =>
-          mean.meanings.map((item) =>
-            item.definitions.map((def) => (
-              <div className="singleMean">
-                <b>{def.definition}</b>
-                <hr
-                  style={{
-                    color: "#00495f",
-                    width: "100%",
-                  }}
-                />
-                {def.example && (
-                  <span>
-                    <b>Example: </b>
-                    {def.example}
-                  </span>
-                )}
-                {def.synonyms && (
-                  <span>
-                    <b>Synonyms: </b>
-                    {def.synonyms.map((s) => `${s}, `)}
-                  </span>
-                )}
-              </div>
-            ))
-          )
+      {meanings.map((mean) =>
+        mean.meanings.map((item) =>
+          item.definitions.map((def) => (
+            <div className="singleMean">
+              <b>{def.definition}</b>
+              <hr
+                style={{
+                  color: "#00495f",
+                  width: "100%",
+                }}
+              />
+              {def.example && (
+                <span>
+                  <b>Example: </b>
+                  {def.example}
+                </span>
+              )}
+              {def.synonyms && (
+                <span>
+                  <b>Synonyms: </b>
+                  {def.synonyms.map((s) => `${s}, `)}
+                </span>
+              )}
+            </div>
+          ))
         )
       )}
     </div>
