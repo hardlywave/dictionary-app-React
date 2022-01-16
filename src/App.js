@@ -71,22 +71,3 @@ function App() {
 }
 
 export default App;
-
-//   const dictionaryApi = async () => {
-//     try {
-//       const data = await axios.get(
-//         `https://api.dictionaryapi.dev/api/v2/entries/en/${word || url_word}`
-//       );
-//       console.log(data);
-//       setMeanings(data.data);
-//     } catch (error) {
-//       console.log(error);
-//       return (Window.location.href = "/error");
-//     }
-//   };
-
-//   useEffect(() => {
-//     dictionaryApi();
-//   }, [url_word]);
-//   return <Definition word={word || url_word} meanings={meanings} />;
-// };
