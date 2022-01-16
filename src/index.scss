@@ -1,0 +1,59 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  outline: 0;
+  font-size: small;
+  font-family: "Roboto", -apple-system, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.dict {
+  display: flex;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 1280px;
+  height: 720px;
+  transform: translate(-50%, -50%);
+  box-shadow: 1px 2px 20px #f3f3f3;
+  border-radius: 10px;
+  border: 1px solid #f1f1f1;
+  &__sidebar {
+    background-color: #f4f6f8;
+    width: 200px;
+    height: calc(100% - 120px);
+    border-right: 1px solid #f1f1f1;
+    padding: 60px 20px;
+    margin-bottom: 30px;
+    &__link {
+      all: unset;
+      &__button {
+        margin-top: 15px;
+        background: #4dd599;
+        border-radius: 4px;
+        color: #fff;
+        border: 0;
+        padding: 10px 20px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: darken(#4dd599, 6%);
+        }
+
+        &:active {
+          background: darken(#4dd599, 10%);
+        }
+      }
+    }
+  }
+
+  &__definition {
+    width: calc(100% - 200px);
+    height: (722px - 60px);
+    overflow: scroll;
+    flex: 1;
+    padding: 30px;
+  }
+}
